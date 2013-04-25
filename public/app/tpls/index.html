@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="span5">
+    <h4>Browse Songs</h4>
+    <form class="form-search">
+      <div class="input-append">
+        <input class="search-query" type="text" ng-model="query">
+        <button class="btn" ng-click="search()">
+          <i class="icon-music"></i>
+        </button>
+      </div>
+    </form>
+    <ul class="nav nav-stacked">
+      <li ng-repeat="song in songs">
+        <button class="btn pull-right" ng-click="select(song)">
+          Request
+          <i class="icon-chevron-right"></i>
+        </button>
+        <h4>{{song.SongName}}</h4>
+        {{song.ArtistName}} - {{song.AlbumName}}
+      </li>
+    </ul>
+  </div>
+  <div class="span6">
+    
+  </div>
+  <iframe ng-src="{{playing}}" width="100%"></iframe>
+</div>
