@@ -1,27 +1,42 @@
 <div class="container">
   <div class="span5">
-    <h4>Browse Songs</h4>
+    <h4>Browse</h4>
     <form class="form-search">
       <div class="input-append">
         <input class="search-query" type="text" ng-model="query">
         <button class="btn" ng-click="search()">
-          <i class="icon-music"></i>
+          <i class="icon-bolt"></i>
         </button>
       </div>
     </form>
     <ul class="nav nav-stacked">
-      <li ng-repeat="song in songs">
-        <button class="btn pull-right" ng-click="select(song)">
-          Request
-          <i class="icon-chevron-right"></i>
-        </button>
-        <h4>{{song.SongName}}</h4>
-        {{song.ArtistName}} - {{song.AlbumName}}
+      <li ng-repeat="hog in hogs" style="margin-bottom: 10px;">
+        <a href="#" ng-click="select(hog)">
+        <div class="media">
+          <div class="pull-right" style="margin-top: 16px;">
+            <i class="icon-chevron-right"></i>
+          </div>
+          <div class="pull-left">
+            <img class="media-object" style="height: 64px; width: 64px;" ng-src="{{hog.tbUrl}}" />
+          </div>
+          <div class="media-body">
+            <h4><div ng-bind-html-unsafe="hog.title"></div></h4>
+          </div>
+        </div>
+        </a>
       </li>
     </ul>
   </div>
   <div class="span6">
-    
+    <div class="row">
+      <img ng-src="{{selected}}"></img>
+    </div>
+    <div class="row">
+    <button 
+      style="margin-top: 20px;"
+      class="btn pull-right" 
+      ng-show="selected"
+      ng-click="submit()">Submit</button>
+    </div>
   </div>
-  <iframe ng-src="{{playing}}" width="100%"></iframe>
 </div>

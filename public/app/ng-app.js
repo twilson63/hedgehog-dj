@@ -2,6 +2,8 @@ var app = angular.module('App', ['ui.bootstrap'])
   .config(function($routeProvider, $locationProvider) {
     $routeProvider
       .when('/', { controller: 'IndexCtrl', templateUrl: '/app/tpls/index.html'})
+      .when('/vote', { controller: 'VoteCtrl', templateUrl: '/app/tpls/vote.html'})
+      .when('/leaders', { controller: 'LeadersCtrl', templateUrl: '/app/tpls/leaders.html'})
       ;
     $locationProvider.html5Mode(true);
   })
@@ -34,36 +36,44 @@ app.factory('socket', function ($rootScope) {
       }
     };
   });
-app.controller('IndexCtrl', function($scope, socket, $window) {
+app.controller('IndexCtrl', function($scope, socket) {
   $scope.foo = "hostname=cowbell.grooveshark.com&songIDs=24577179&style=metal&p=0";
   
   $scope.search = function() {
-    socket.emit('search', $scope.query, function(songs) {
-      $scope.songs = songs;
+    socket.emit('search', $scope.query, function(res) {
+      $scope.hogs = res.responseData.results;
     });
   };
 
-  $scope.select = function(song) {
-    //socket.emit('song', song);
-    //console.log(song);
-    play(song);
-    return false;
+  $scope.select = function(hog) {
+    $scope.selected = hog.url;
   };
-
-  function play (song) {
-    angular.element('iframe').attr('src', song.Url);
-    // if (!song) return;
-    // $scope.playing = '<hr><b>Now Playing: </b>' + 
-    //   song.ArtistName + ' ' +
-    //   song.SongName + '<br />';
-    // var iframe = angular.element('<iframe></iframe>');
-    // iframe.frameborder = 0;
-    // console.log(song);
-    // iframe.src = song.Url;
-    // angular.element('body').append(iframe);
-  }
   
-  //socket.on('song', play);
+  $scope.submit = function() {
+    socket.emit('submit', $scope.selected);
+    $scope.selected = "http://placehold.it/200x300";
+    $scope.hogs = null;
+    $scope.query = null;
+    //console.log($scope.selected);
+  };
 
 });
 
+
+app.controller('LeadersCtrl', function($scope, socket) {
+
+});
+app.controller('VoteCtrl', function($scope, socket, $location) {
+  $scope.voted = false;
+  $scope.hogs = [];
+  socket.on('addHog', function(hog) {
+    $scope.hogs.push(hog);
+  });
+  socket.emit('hogs');
+  $scope.vote = function(hog) {
+    if ($scope.voted) { return alert('only one vote per session'); }
+    socket.emit('vote', hog);
+    $scope.voted = true;
+    $location.path('/leaders');
+  };
+});

@@ -1,13 +1,16 @@
 {
   "name": "hedgehog-dj",
-  "version": "0.0.1",
+  "version": "0.0.1-1",
   "description": "ERROR: No README.md file found!",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
   },
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/twilson63/hedgehog-dj.git"
+  },
   "author": "",
   "license": "BSD",
   "dependencies": {
@@ -19,10 +22,14 @@
     "grunt-contrib-concat": "~0.2.0",
     "grunt-contrib-jshint": "~0.4.3",
     "express": "~3.2.0",
-    "socket.io": "~0.9.14"
+    "socket.io": "~0.9.14",
+    "levelup": "~0.8.0",
+    "node-uuid": "~1.4.0"
   },
   "subdomain": "twilson63-hedgehog",
   "engines": {
     "node": "0.8.x"
-  }
+  },
+  "gitHead": "ae36cf5b0f837dd79bf1a38c13b65216f9c587f7",
+  "devDependencies": {}
 }

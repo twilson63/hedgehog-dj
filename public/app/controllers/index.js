@@ -1,33 +1,23 @@
-app.controller('IndexCtrl', function($scope, socket, $window) {
+app.controller('IndexCtrl', function($scope, socket) {
   $scope.foo = "hostname=cowbell.grooveshark.com&songIDs=24577179&style=metal&p=0";
   
   $scope.search = function() {
-    socket.emit('search', $scope.query, function(songs) {
-      $scope.songs = songs;
+    socket.emit('search', $scope.query, function(res) {
+      $scope.hogs = res.responseData.results;
     });
   };
 
-  $scope.select = function(song) {
-    //socket.emit('song', song);
-    //console.log(song);
-    play(song);
-    return false;
+  $scope.select = function(hog) {
+    $scope.selected = hog.url;
   };
-
-  function play (song) {
-    angular.element('iframe').attr('src', song.Url);
-    // if (!song) return;
-    // $scope.playing = '<hr><b>Now Playing: </b>' + 
-    //   song.ArtistName + ' ' +
-    //   song.SongName + '<br />';
-    // var iframe = angular.element('<iframe></iframe>');
-    // iframe.frameborder = 0;
-    // console.log(song);
-    // iframe.src = song.Url;
-    // angular.element('body').append(iframe);
-  }
   
-  //socket.on('song', play);
+  $scope.submit = function() {
+    socket.emit('submit', $scope.selected);
+    $scope.selected = "http://placehold.it/200x300";
+    $scope.hogs = null;
+    $scope.query = null;
+    //console.log($scope.selected);
+  };
 
 });
 
