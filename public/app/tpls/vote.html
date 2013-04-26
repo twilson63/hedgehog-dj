@@ -1,10 +1,11 @@
 <div class="container">
   <h2>Voting - Click to vote</h2>
+  <!-- insert vote template here-->
   <div class="span2" ng-repeat="hog in hogs">
     <a href="#" ng-click="vote(hog)">
       <img 
         style="height: 120px; width: 120px;"
-        ng-src="{{hog.value}}" 
+        ng-src="{{hog.url}}" 
        />
     </a>
   </div>

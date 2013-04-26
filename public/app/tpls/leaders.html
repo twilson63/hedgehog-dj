@@ -1,6 +1,13 @@
 <div class="container">
   <h2>Top Hedgehogs</h2>
-  <ul>
-    <li></li>
-  </ul>
+  <!-- insert leaders template here-->
+  <div class="span2" ng-repeat="hog in hogs | orderBy: '-votes'">
+    <a href="#" ng-click="vote(hog)">
+      <img 
+        style="height: 120px; width: 120px;"
+        ng-src="{{hog.url}}" 
+       />
+    </a>
+    <div style="padding: 30px;font-size: 3em;font-weight: bold;">{{hog.votes}}</div>
+  </div>
 </div>

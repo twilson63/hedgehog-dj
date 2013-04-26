@@ -1,6 +1,7 @@
 <div class="container">
   <div class="span5">
     <h4>Browse</h4>
+    <!-- insert search template here-->
     <form class="form-search">
       <div class="input-append">
         <input class="search-query" type="text" ng-model="query">
@@ -9,15 +10,21 @@
         </button>
       </div>
     </form>
+    <style>
+      li { margin-bottom: 10px; }
+      .chevron { margin-top: 16px;}
+      .media-object { height: 64px; width: 64px; }
+    </style>
     <ul class="nav nav-stacked">
-      <li ng-repeat="hog in hogs" style="margin-bottom: 10px;">
+      <!-- insert select template here-->
+      <li ng-repeat="hog in hogs" >
         <a href="#" ng-click="select(hog)">
         <div class="media">
-          <div class="pull-right" style="margin-top: 16px;">
+          <div class="chevron pull-right">
             <i class="icon-chevron-right"></i>
           </div>
           <div class="pull-left">
-            <img class="media-object" style="height: 64px; width: 64px;" ng-src="{{hog.tbUrl}}" />
+            <img class="media-object" style="" ng-src="{{hog.tbUrl}}" />
           </div>
           <div class="media-body">
             <h4><div ng-bind-html-unsafe="hog.title"></div></h4>

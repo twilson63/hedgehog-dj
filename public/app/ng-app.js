@@ -36,9 +36,8 @@ app.factory('socket', function ($rootScope) {
       }
     };
   });
-app.controller('IndexCtrl', function($scope, socket) {
-  $scope.foo = "hostname=cowbell.grooveshark.com&songIDs=24577179&style=metal&p=0";
-  
+app.controller('IndexCtrl', function($scope, socket, $location) {
+  // insert search code here
   $scope.search = function() {
     socket.emit('search', $scope.query, function(res) {
       $scope.hogs = res.responseData.results;
@@ -51,29 +50,27 @@ app.controller('IndexCtrl', function($scope, socket) {
   
   $scope.submit = function() {
     socket.emit('submit', $scope.selected);
-    $scope.selected = "http://placehold.it/200x300";
-    $scope.hogs = null;
-    $scope.query = null;
-    //console.log($scope.selected);
+    $location.path('/vote');
   };
 
 });
 
 
 app.controller('LeadersCtrl', function($scope, socket) {
-
+  $scope.hogs = [];
+  socket.on('addHog', function(hog) {
+    $scope.hogs.push(hog);
+  });
+  socket.emit('hogs');
 });
 app.controller('VoteCtrl', function($scope, socket, $location) {
-  $scope.voted = false;
   $scope.hogs = [];
   socket.on('addHog', function(hog) {
     $scope.hogs.push(hog);
   });
   socket.emit('hogs');
   $scope.vote = function(hog) {
-    if ($scope.voted) { return alert('only one vote per session'); }
     socket.emit('vote', hog);
-    $scope.voted = true;
     $location.path('/leaders');
   };
 });
